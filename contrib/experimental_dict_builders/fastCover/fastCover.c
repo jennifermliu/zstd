@@ -367,7 +367,7 @@ static size_t FASTCOVER_buildDictionary(const FASTCOVER_ctx_t *ctx, U32 *freqs,
   /* Divide the data up into epochs of equal size.
    * We will select at least one segment from each epoch.
    */
-  const U32 epochs = MAX(1, (U32)(dictBufferCapacity / parameters.k));
+  const U32 epochs = MAX(1, (U32)(dictBufferCapacity / parameters.k * 2));
   const U32 epochSize = (U32)(ctx->nbDmers / epochs);
   size_t epoch;
   DISPLAYLEVEL(2, "Breaking content into %u epochs of size %u\n", epochs,
