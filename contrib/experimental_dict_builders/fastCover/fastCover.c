@@ -280,7 +280,7 @@ static FASTCOVER_segment_t FASTCOVER_selectSegment(const FASTCOVER_ctx_t *ctx,
       /* Get hash value of current dmer */
       const size_t index = FASTCOVER_hashPtrToIndex(ctx->samples + activeSegment.end, parameters.f, ctx->d);
       /* Add frequency of this index to score if this is the first occurence of index in active segment */
-      U32 *newDmerOcc = COVER_map_at(activeDmers, index);
+      U32 *newDmerOcc = COVER_map_at(activeDmers, (U32)index);
       if (*newDmerOcc == 0) {
         activeSegment.score += freqs[index];
       }
@@ -291,11 +291,11 @@ static FASTCOVER_segment_t FASTCOVER_selectSegment(const FASTCOVER_ctx_t *ctx,
       if (activeSegment.end - activeSegment.begin == dmersInK + 1) {
         /* Get hash value of the dmer to be eliminated from active segment */
         const size_t delIndex = FASTCOVER_hashPtrToIndex(ctx->samples + activeSegment.begin, parameters.f, ctx->d);
-        U32 *delDmerOcc = COVER_map_at(activeDmers, delIndex);
+        U32 *delDmerOcc = COVER_map_at(activeDmers, (U32)delIndex);
         *delDmerOcc -= 1;
         /* Subtract frequency of this index from score if this is the last occurrence of this index in active segment */
         if (*delDmerOcc == 0) {
-          COVER_map_remove(activeDmers, delIndex);
+          COVER_map_remove(activeDmers, (U32)delIndex);
           activeSegment.score -= freqs[delIndex];
         }
         /* Increment start of segment */
